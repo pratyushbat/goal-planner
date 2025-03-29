@@ -1,0 +1,141 @@
+<div class="container">
+    <div class="row pt-3">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="reactiveForm">
+              <div class="row">
+                <div class="col-7">
+                  <div class="mb-3">
+                    <label class="form-label">Goal Title</label
+                    ><input
+                      type="text"
+                      formControlName="goalName"
+                      required=""
+                      class="form-control ng-pristine ng-invalid ng-touched"
+                    />
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="mb-3">
+                        <label class="form-label">Start Date</label
+                        ><input
+                          type="date"
+                          formControlName="startDate"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="mb-3">
+                        <label class="form-label">Target Date</label
+                        ><input
+                          type="date"
+                          formControlName="endDate"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Description</label
+                    ><textarea
+                      formControlName="description"
+                      class="form-control"
+                    ></textarea>
+                  </div>
+                </div>
+                <div  formArrayName="skills" class="col-5">
+                  <ng-container  *ngFor="let item of reactiveForm.get('skills')['controls'];  let i = index"        [formGroupName]="i"         >
+                      <div  class="row" >
+                        <div class="col-6">
+                          <div class="mb-1">
+                            <label class="form-label">street</label
+                            ><input
+                              type="text"
+                              formControlName="street"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-1">
+                            <label class="form-label">city</label
+                            ><input
+                              type="text"
+                              formControlName="city"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-8">
+                          <label class="form-label">postal</label
+                          ><textarea 
+                          formControlName="postal"
+                            class="form-control"
+                          ></textarea>
+                        </div>
+                      </div>
+  
+                  </ng-container>
+              
+                </div>
+                <div  formArrayName="test_skills" class="col-5">
+                  <ng-container  *ngFor="let item of reactiveForm.get('test_skills')['controls'];  let i = index"            >
+                    <input type="text" [placeholder]="i" [formControlName]="i" class="form-control" />                    
+                  </ng-container>
+              
+                </div>
+
+                <div  formGroupName="address" class="col-5">
+                        <div  class="row">
+                          <div class="col-6">
+                            <div class="mb-1">
+                              <label class="form-label">street</label
+                              ><input
+                                type="text"
+                                formControlName="street"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="mb-1">
+                              <label class="form-label">city</label
+                              ><input
+                                type="date"
+                                formControlName="city"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-8">
+                            <label class="form-label">postal</label
+                            ><textarea
+                              formControlName="postal"
+                              class="form-control"
+                            ></textarea>
+                          </div>
+                        </div>
+ 
+                    
+                  </div>
+              </div>
+              <div class="row pt-3">
+                <div class="col-12 text-center">
+                  <button type="button" class="btn btn-primary">
+                    Create Goal
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="row pt-3">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="goalForm">
+            <div class="row">
+              <div class="col-7">
+                <div class="mb-3">
+                  <label class="form-label">Goal Title</label
+                  ><input
+                    type="text"
+                    formControlName="goalName"
+                    required=""
+                    class="form-control ng-pristine ng-invalid ng-touched"
+                  />
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label class="form-label">Start Date</label
+                      ><input
+                        type="date"
+                        formControlName="startDate"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label class="form-label">Target Date</label
+                      ><input
+                        type="date"
+                        formControlName="endDate"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Description</label
+                  ><textarea
+                    formControlName="description"
+                    class="form-control"
+                  ></textarea>
+                </div>
+              </div>
+              <div  formArrayName="milestones" class="col-5">
+                <ng-container  *ngFor="let item of milestoneListControls;  let idx = index" [formGroupName]="idx"                >
+                    <div  class="row">{{idx}}
+                      <div class="col-6">
+                        <div class="mb-1">
+                          <label class="form-label">Title1</label
+                          ><input
+                            type="text"
+                            formControlName="milestoneName"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-1">
+                          <label class="form-label">Target Date</label
+                          ><input
+                            type="date"
+                            formControlName="targetDate"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-8">
+                        <label class="form-label">Description</label
+                        ><textarea
+                          formControlName="description"
+                          class="form-control"
+                        ></textarea>
+                      </div>
+                    </div>
+
+                </ng-container>
+                <div class="row">
+                  <div class="col-12 text-end">
+                    <button
+                      type="button"
+                      (click)="createNewMilestoneForm()"
+                      class="btn btn-outline-secondary mt-5"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-3">
+              <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary" (click)="onSaveGoal()">
+                  Create Goal
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
