@@ -10,6 +10,9 @@ import { TaskListComponent } from './pages/task-list/task-list.component';
 import { AuthGuardService } from './pages/guards/auth-guard';
 import { NewGoalComponent } from './pages/new-goal/new-goal.component';
 import { ProacedemyformComponent } from './pages/proacedemyform/proacedemyform.component';
+import { GoaldetailComponent } from './goaldetail/goaldetail.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { HighlightandborderComponent } from './highlightandborder/highlightandborder.component';
 
 @NgModule({
   imports: [
@@ -18,12 +21,17 @@ import { ProacedemyformComponent } from './pages/proacedemyform/proacedemyform.c
       { path: 'home', component: HomeComponent },
       { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuardService]  },
       { path: 'goals', component: GoalListComponent , canActivate: [AuthGuardService] },
+      { path: 'goals/:id', component: GoaldetailComponent , canActivate: [AuthGuardService] },
       { path: 'new-goal', component: NewGoalComponent , canActivate: [AuthGuardService] },
-      { path: 'tasks', component: TaskListComponent, canActivate: [AuthGuardService]  },
+      { path: 'tasks', 
+        loadComponent: ()=> import('./pages/task-list/task-list.component').then(m=>m.TaskListComponent),
+        // component: TaskListComponent, 
+        canActivate: [AuthGuardService]  },
       { path: 'reminders', component: RemidersComponent , canActivate: [AuthGuardService] },
       { path: 'acedemy', component: ProacedemyformComponent , canActivate: [AuthGuardService] },
+      { path: 'highlight', component: HighlightandborderComponent , canActivate: [AuthGuardService] },
       
-      // { path: '**', component: NotFoundComponent },s
+      { path: '**', component: PagenotfoundComponent },
     ],{
       preloadingStrategy: PreloadAllModules
     }),

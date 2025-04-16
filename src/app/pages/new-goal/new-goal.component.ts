@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GoalService } from '../service/goal-service';
+import { exhaustMap, filter, Observable, Subject, tap } from 'rxjs';
 
 @Component({
   selector: 'app-new-goal',
   templateUrl: './new-goal.component.html',
   styleUrls: ['./new-goal.component.scss'],
 })
-export class NewGoalComponent {
+export class NewGoalComponent implements OnInit{
   goalForm: FormGroup = new FormGroup({});
-
+  submitted = false;
+  btnSub$: Subject<boolean> = new Subject();
+  
   constructor(private goalService: GoalService) {
     this.initializeForm();
     this.createNewMilestoneForm();
@@ -20,10 +23,15 @@ export class NewGoalComponent {
     // }
     this.goalForm.get("userId").setValue(goalService.loggedUserData.userId)
   }
+
+  ngOnInit(): void {
+    this.onSubmit();
+  }
+
   initializeForm() {
     this.goalForm = new FormGroup({
       goalId: new FormControl(0),
-      goalName: new FormControl(''),
+      goalName: new FormControl('' ,[Validators.required]),
       description: new FormControl(''),
       startDate: new FormControl(''),
       endDate: new FormControl(''),
@@ -38,7 +46,7 @@ export class NewGoalComponent {
   }
   get milestoneListControls() {
     const milestoneFormArray = this.goalForm.get('milestones') as FormArray;
-    console.log(milestoneFormArray.controls);
+    // console.log(milestoneFormArray.controls);
     return milestoneFormArray.controls;
   }
 
@@ -53,12 +61,30 @@ export class NewGoalComponent {
     // console.log(this.goalForm, this.milestoneList);
     this.milestoneList.push(newForm);
   }
-
-  onSaveGoal() {
-    const formValue = this.goalForm.value;
-    this.goalService.saveGoal(formValue).subscribe((res) => console.log(res));
+  
+  onSubmit(): void {
+    this.btnSub$.pipe(
+      tap(() => this.submitted = true),
+      filter(() => this.goalForm.valid),
+      exhaustMap(() => this.onSaveGoal(this.goalForm.value))
+    ).subscribe(data => {
+      console.log('saved notification => ', data);
+      this.submitted = false;
+     
+    });
   }
 
+  // onSaveGoal(formValue:any) {
+  //   // const formValue = this.goalForm.value;
+  //   this.goalService.saveGoal(formValue).subscribe((res) => console.log(res));
+  // }
+  // onSaveGoal(formValue:any): Observable<any> {
+  //  return  this.goalService.saveGoal(formValue);
+  // }
+  onSaveGoal(formValue:any): Observable<any> {
+    return  this.goalService.saveGoal(formValue);
+   }
+ 
   getAllGoals(){
 
   }
